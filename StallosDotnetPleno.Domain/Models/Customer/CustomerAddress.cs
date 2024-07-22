@@ -15,9 +15,8 @@ namespace StallosDotnetPleno.Domain.Models.Customer
         public Customer? Customer { get; private set; }
 
         private CustomerAddress(
-            int id, int customerId, string zipCode, string street, string number, string neighborhood, string city, string uf)
+          int customerId, string zipCode, string street, string number, string neighborhood, string city, string uf)
         {
-            Id = id;
             CustomerId = customerId;
             ZipCode = zipCode;
             Street = street;
@@ -29,8 +28,8 @@ namespace StallosDotnetPleno.Domain.Models.Customer
             Validate(this, new CustomerAddressValidator());
         }
 
-        public static CustomerAddress New(int id, int customerId, string zipCode, string street, string number,
+        public static CustomerAddress New(int customerId, string zipCode, string street, string number,
             string neighborhood, string city, string uf)
-            => new(id, customerId, zipCode, street, number, neighborhood, city, uf);
+            => new(customerId, zipCode, street, number, neighborhood, city, uf);
     }
 }

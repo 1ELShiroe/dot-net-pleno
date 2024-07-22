@@ -23,5 +23,7 @@ namespace StallosDotnetPleno.Domain.Models.Customer
 
         public static Customer New(TypeUser type, string nome, string documento, ICollection<CustomerAddress> addresses)
             => new(type, nome, documento, addresses);
+
+        public void SetAddresses(ICollection<CustomerAddress> addresses) => Addresses = addresses;
     }
 }

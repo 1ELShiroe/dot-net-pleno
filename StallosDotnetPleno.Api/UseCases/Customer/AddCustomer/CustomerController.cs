@@ -1,4 +1,6 @@
+using StallosDotnetPleno.Application.UseCases.Customer.AddCustomer;
 using StallosDotnetPleno.Application.Interfaces.Services;
+using StallosDotnetPleno.Application.UseCases;
 using StallosDotnetPleno.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +11,9 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
     [ApiController]
     [Route("api/pessoa")]
     public class CustomerController(
-            INotificationService Notification) : ControllerBase
+            INotificationService Notification,
+            IUseCase<AddCustomerUCRequest> UseCase,
+            AddCustomerPresenter Presenter) : ControllerBase
     {
         [HttpPost]
         public IActionResult Add([FromBody] CustomerRequest payload)
@@ -32,10 +36,13 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
                     Notification.AddNotifications(address.ValidationResult!);
                 }
 
-                return BadRequest();
+                return Presenter.ViewModel;
             }
 
-            return Ok(payload);
+            var request = new AddCustomerUCRequest(customer);
+            UseCase.Execute(request);
+
+            return Presenter.ViewModel;
         }
 
         public record CustomerAddressRequest(string ZipCode, string Street, string Number, string Neighborhood, string City, string UF);

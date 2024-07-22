@@ -19,7 +19,7 @@ namespace StallosDotnetPleno.Infrastructure.Database.Map.Customer
 
 
             builder.HasOne(a => a.Customer)
-                   .WithMany(p => p.Address)
+                   .WithMany(p => p.Addresses)
                    .HasForeignKey(a => a.CustomerId)
                    .OnDelete(DeleteBehavior.Cascade);
         }

@@ -13,7 +13,8 @@ namespace StallosDotnetPleno.Domain.Validators.Customer
                 .NotEmpty().WithMessage("Campo 'Street' obrigatório não preenchido");
 
             RuleFor(c => c.UF)
-                .NotEmpty().WithMessage("Campo 'UF' obrigatório não preenchido");
+                .NotEmpty().WithMessage("Campo 'UF' obrigatório não preenchido")
+                .Length(2).WithMessage("Campo 'UF' deve ter exatamente 2 caracteres.");
 
             RuleFor(c => c.Neighborhood)
                 .NotEmpty().WithMessage("Campo 'Neighborhood' obrigatório não preenchido");
@@ -22,7 +23,8 @@ namespace StallosDotnetPleno.Domain.Validators.Customer
                 .NotEmpty().WithMessage("Campo 'Number' obrigatório não preenchido");
 
             RuleFor(c => c.ZipCode)
-                .NotEmpty().WithMessage("Campo 'ZipCode' obrigatório não preenchido");
+                .NotEmpty().WithMessage("Campo 'ZipCode' obrigatório não preenchido")
+                .Matches(@"^\d{5}(-\d{3})?$").WithMessage("Campo 'ZipCode' incorreto. Utilize o formato 'XXXXX-XXX' ou 'XXXXXXXX'");
         }
     }
 }

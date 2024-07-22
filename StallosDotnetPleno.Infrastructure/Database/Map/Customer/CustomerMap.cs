@@ -15,7 +15,7 @@ namespace StallosDotnetPleno.Infrastructure.Database.Map.Customer
             builder.Property(a => a.Name).IsRequired();
             builder.Property(a => a.Document).IsRequired();
 
-            builder.HasMany(a => a.Address)
+            builder.HasMany(a => a.Addresses)
                    .WithOne(p => p.Customer)
                    .HasForeignKey(a => a.CustomerId)
                    .OnDelete(DeleteBehavior.Cascade);

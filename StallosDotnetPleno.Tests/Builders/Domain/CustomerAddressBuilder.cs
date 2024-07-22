@@ -67,7 +67,7 @@ namespace StallosDotnetPleno.Tests.Builders.Domain
 
         public CustomerAddressBuilder WithUF(string value)
         {
-            City = value;
+            UF = value;
             return this;
         }
     }

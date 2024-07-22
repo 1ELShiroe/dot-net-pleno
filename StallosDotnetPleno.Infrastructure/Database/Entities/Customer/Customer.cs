@@ -9,6 +9,6 @@ namespace StallosDotnetPleno.Infrastructure.Database.Entities.Customer
         public string? Name { get; private set; }
         public string? Document { get; private set; }
 
-        public ICollection<CustomerAddress> Address { get; private set; } = [];
+        public ICollection<CustomerAddress> Addresses { get; private set; } = [];
     }
 }

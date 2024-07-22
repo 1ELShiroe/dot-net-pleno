@@ -9,19 +9,19 @@ namespace StallosDotnetPleno.Domain.Models.Customer
         public string Name { get; private set; }
         public string Document { get; private set; }
 
-        public ICollection<CustomerAddress> Address { get; private set; } = [];
+        public ICollection<CustomerAddress> Addresses { get; private set; } = [];
 
-        private Customer(TypeUser type, string name, string document, ICollection<CustomerAddress> address)
+        private Customer(TypeUser type, string name, string document, ICollection<CustomerAddress> addresses)
         {
             Type = type;
             Name = name;
             Document = document;
-            Address = address;
+            Addresses = addresses;
 
             Validate(this, new CustomerValidator());
         }
 
-        public static Customer New(TypeUser type, string nome, string documento, ICollection<CustomerAddress> address)
-            => new(type, nome, documento, address);
+        public static Customer New(TypeUser type, string nome, string documento, ICollection<CustomerAddress> addresses)
+            => new(type, nome, documento, addresses);
     }
 }

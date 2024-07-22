@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StallosDotnetPleno.Domain\StallosDotnetPleno.Domain.csproj" />
+    <ProjectReference Include="..\StallosDotnetPleno.Application\StallosDotnetPleno.Application.csproj" />
   </ItemGroup>
 
 </Project>

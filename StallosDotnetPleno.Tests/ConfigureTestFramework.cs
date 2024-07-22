@@ -1,3 +1,6 @@
+using StallosDotnetPleno.Infrastructure.Modules;
+using StallosDotnetPleno.Application.Modules;
+using StallosDotnetPleno.Api.Modules;
 using Xunit.Frameworks.Autofac;
 using Xunit.Abstractions;
 using Autofac;
@@ -14,7 +17,10 @@ namespace StallosDotnetPleno.Tests
 
         protected override void ConfigureContainer(ContainerBuilder builder)
         {
-
+            builder.RegisterModule<WebApiModule>();
+            builder.RegisterModule<AutoMigrationModule>();
+            builder.RegisterModule<ApplicationModule>();
+            builder.RegisterModule<InfrastructureModule>();
         }
     }
 }

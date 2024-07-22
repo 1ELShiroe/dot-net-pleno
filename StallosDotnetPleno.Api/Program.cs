@@ -1,6 +1,12 @@
+using StallosDotnetPleno.Api.DependencyInjection;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.AddAutoFac());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

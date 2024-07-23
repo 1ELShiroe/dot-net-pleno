@@ -14,7 +14,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
             if (existUser != null)
             {
                 Console.WriteLine(HandlerName, $"Um usuário com o documento '{req.Customer.Document}' já existe.");
-                req.OutputPort.Error($"Um usuário com o documento '{req.Customer.Document}' já existe.");
+                req.OutputPort?.Error($"Um usuário com o documento '{req.Customer.Document}' já existe.");
                 return;
             }
 

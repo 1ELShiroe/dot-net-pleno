@@ -1,8 +1,9 @@
+using StallosDotnetPleno.Domain.Models.Customer;
 using FluentValidation;
 
 namespace StallosDotnetPleno.Domain.Validators.Customer
 {
-    public class CustomerAddressValidator : AbstractValidator<Models.Customer.CustomerAddress>
+    public class CustomerAddressValidator : AbstractValidator<CustomerAddressModel>
     {
         public CustomerAddressValidator()
         {

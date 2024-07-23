@@ -11,13 +11,13 @@ namespace StallosDotnetPleno.Tests.Builders.Domain
         public TypeUser Type { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public string Document { get; private set; } = string.Empty;
-        public List<CustomerAddress> Addresses { get; private set; } = [];
+        public List<CustomerAddressModel> Addresses { get; private set; } = [];
 
         public static CustomerBuilder Empty() => new();
 
-        public Customer Build()
+        public CustomerModel Build()
         {
-            var model = Customer.New(Type, Name, Document, Addresses);
+            var model = CustomerModel.New(Type, Name, Document, Addresses);
             model.Id = Id;
 
             return model;

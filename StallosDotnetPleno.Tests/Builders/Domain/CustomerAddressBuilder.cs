@@ -15,9 +15,9 @@ namespace StallosDotnetPleno.Tests.Builders.Domain
 
         public static CustomerAddressBuilder Empty() => new();
 
-        public CustomerAddress Build()
+        public CustomerAddressModel Build()
         {
-            var model = CustomerAddress.New(CustomerId, ZipCode, Street, Number, Neighborhood, City, UF);
+            var model = CustomerAddressModel.New(CustomerId, ZipCode, Street, Number, Neighborhood, City, UF);
             model.Id = Id;
 
             return model;

@@ -1,9 +1,9 @@
 using StallosDotnetPleno.Application.UseCases.Customer.AddCustomer;
 using StallosDotnetPleno.Application.Interfaces.Services;
+using StallosDotnetPleno.Domain.Models.Customer;
 using StallosDotnetPleno.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
-using Model = StallosDotnetPleno.Domain.Models.Customer;
 
 namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
 {
@@ -17,11 +17,11 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
         [HttpPost]
         public IActionResult Add([FromBody] AddCustomerRequest payload)
         {
-            var customer = Model.Customer.New(payload.Type, payload.Name, payload.Document, []);
+            var customer = CustomerModel.New(payload.Type, payload.Name, payload.Document, []);
 
             var addresses = payload.Addresses
                     .Select(a =>
-                        Model.CustomerAddress.New(customer.Id, a.ZipCode, a.Street, a.Number, a.Neighborhood, a.City, a.UF))
+                        CustomerAddressModel.New(customer.Id, a.ZipCode, a.Street, a.Number, a.Neighborhood, a.City, a.UF))
                     .ToList();
 
             customer.SetAddresses(addresses);

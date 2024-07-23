@@ -13,7 +13,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
 
             Console.WriteLine(HandlerName, "Customer successfully created.");
 
-            req.OutputPort.Standard(new(
+            req.OutputPort?.Standard(new(
                 "Usuário criado com sucesso!",
                 new(newCustomer)));
 

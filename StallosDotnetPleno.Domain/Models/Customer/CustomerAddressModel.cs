@@ -1,10 +1,9 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using StallosDotnetPleno.Domain.Validators.Customer;
+using System.Text.Json.Serialization;
 
 namespace StallosDotnetPleno.Domain.Models.Customer
 {
-    public class CustomerAddress : Entity
+    public class CustomerAddressModel : Entity
     {
         public int CustomerId { get; private set; }
         public string ZipCode { get; private set; }
@@ -15,9 +14,9 @@ namespace StallosDotnetPleno.Domain.Models.Customer
         public string UF { get; private set; }
 
         [JsonIgnore]
-        public Customer? Customer { get; private set; }
+        public CustomerModel? Customer { get; private set; }
 
-        private CustomerAddress(
+        private CustomerAddressModel(
           int customerId, string zipCode, string street, string number, string neighborhood, string city, string uf)
         {
             CustomerId = customerId;
@@ -31,7 +30,7 @@ namespace StallosDotnetPleno.Domain.Models.Customer
             Validate(this, new CustomerAddressValidator());
         }
 
-        public static CustomerAddress New(int customerId, string zipCode, string street, string number,
+        public static CustomerAddressModel New(int customerId, string zipCode, string street, string number,
             string neighborhood, string city, string uf)
             => new(customerId, zipCode, street, number, neighborhood, city, uf);
     }

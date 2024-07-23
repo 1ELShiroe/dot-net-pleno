@@ -1,4 +1,4 @@
-using Model = StallosDotnetPleno.Domain.Models.Customer;
+using StallosDotnetPleno.Domain.Models.Customer;
 
 namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
 {
@@ -9,7 +9,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
             Console.WriteLine(HandlerName, "Starting process");
 
             var addresses = req.NewCustomer.Addresses?.Select(a =>
-                Model.CustomerAddress.New(
+                CustomerAddressModel.New(
                     req.Customer!.Id,
                     a.ZipCode ?? string.Empty,
                     a.Street ?? string.Empty,
@@ -19,7 +19,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
                     a.UF ?? string.Empty))
                 .ToList();
 
-            var customer = Model.Customer.New(
+            var customer = CustomerModel.New(
                 req.Customer!.Type,
                 req.NewCustomer.Name ?? req.Customer.Name,
                 req.Customer.Document,

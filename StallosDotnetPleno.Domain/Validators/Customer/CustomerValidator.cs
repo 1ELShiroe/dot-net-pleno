@@ -1,10 +1,11 @@
-using FluentValidation;
-using StallosDotnetPleno.Domain.Enums;
+using StallosDotnetPleno.Domain.Models.Customer;
 using StallosDotnetPleno.Domain.Extensions;
+using StallosDotnetPleno.Domain.Enums;
+using FluentValidation;
 
 namespace StallosDotnetPleno.Domain.Validators.Customer
 {
-    public class CustomerValidator : AbstractValidator<Models.Customer.Customer>
+    public class CustomerValidator : AbstractValidator<CustomerModel>
     {
         public CustomerValidator()
         {

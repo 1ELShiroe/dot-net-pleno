@@ -1,7 +1,7 @@
-using Model = StallosDotnetPleno.Domain.Models.Customer;
+using StallosDotnetPleno.Domain.Models.Customer;
 
 namespace StallosDotnetPleno.Application.Boundaries.Customer
 {
     public record PutCustomerOPP(string Message, PutCustomerDataOPP Data);
-    public record PutCustomerDataOPP(Model.Customer Customer);
+    public record PutCustomerDataOPP(CustomerModel Customer);
 }

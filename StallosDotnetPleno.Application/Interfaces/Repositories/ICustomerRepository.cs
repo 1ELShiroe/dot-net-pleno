@@ -1,15 +1,14 @@
+using StallosDotnetPleno.Domain.Models.Customer;
 using System.Linq.Expressions;
-
-using Model = StallosDotnetPleno.Domain.Models.Customer;
 
 namespace StallosDotnetPleno.Application.Interfaces.Repositories
 {
     public interface ICustomerRepository
     {
-        public Model.Customer GetCustomer(Expression<Func<Model.Customer, bool>> expression);
-        public List<Model.Customer> GetCustomers(Expression<Func<Model.Customer, bool>> expression);
-        public Model.Customer Add(Model.Customer model);
-        public int Remove(Model.Customer model);
-        public int Update(Model.Customer model);
+        public CustomerModel GetCustomer(Expression<Func<CustomerModel, bool>> expression);
+        public List<CustomerModel> GetCustomers(Expression<Func<CustomerModel, bool>> expression);
+        public CustomerModel Add(CustomerModel model);
+        public int Remove(CustomerModel model);
+        public int Update(CustomerModel model);
     }
 }

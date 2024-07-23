@@ -12,6 +12,7 @@ namespace StallosDotnetPleno.Infrastructure.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connection = Environment.GetEnvironmentVariable("DBCONN");
+            
             if (!string.IsNullOrEmpty(connection))
                 optionsBuilder.UseSqlServer(connection, options =>
                 {

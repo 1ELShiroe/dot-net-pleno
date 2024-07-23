@@ -9,7 +9,9 @@ namespace StallosDotnetPleno.Api.DependencyInjection
     {
         public static ContainerBuilder AddAutoFac(this ContainerBuilder builder)
         {
+            builder.RegisterModule<AutoMapperModule>();
             builder.RegisterModule<WebApiModule>();
+            builder.RegisterModule<PresentersModule>();
             builder.RegisterModule<AutoMigrationModule>();
             builder.RegisterModule<InfrastructureModule>();
             builder.RegisterModule<ApplicationModule>();

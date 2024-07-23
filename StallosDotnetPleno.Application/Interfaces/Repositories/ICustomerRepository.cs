@@ -8,6 +8,7 @@ namespace StallosDotnetPleno.Application.Interfaces.Repositories
         public CustomerModel GetCustomer(Expression<Func<CustomerModel, bool>> expression);
         public List<CustomerModel> GetCustomers(Expression<Func<CustomerModel, bool>> expression);
         public CustomerModel Add(CustomerModel model);
+        public int UpdateRange(List<CustomerModel> models);
         public int Remove(CustomerModel model);
         public int Update(CustomerModel model);
     }

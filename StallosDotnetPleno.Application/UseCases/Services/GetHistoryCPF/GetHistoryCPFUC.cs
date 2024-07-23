@@ -10,14 +10,16 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF
             GetCustomersHandler getCustomersHandler,
             CheckBolsaFamiliaHandler checkBolsaFamiliaHandler,
             CheckPepHandler checkPepHandler,
-            CheckInterpol checkInterpol)
+            CheckInterpol checkInterpol,
+            UpdateCustomersHandler updateCustomersHandler)
         {
             GetCustomersHandler = getCustomersHandler;
 
             GetCustomersHandler
                 .SetSucessor(checkBolsaFamiliaHandler)
                 .SetSucessor(checkPepHandler)
-                .SetSucessor(checkInterpol);
+                .SetSucessor(checkInterpol)
+                .SetSucessor(updateCustomersHandler);
         }
 
         public void Execute(GetHistoryCPFUCRequest req)

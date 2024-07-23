@@ -45,7 +45,7 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.PutCustomer
                 )
             );
 
-            ViewModel = new OkObjectResult(response) { StatusCode = 201 };
+            ViewModel = new OkObjectResult(response);
         }
     }
 }

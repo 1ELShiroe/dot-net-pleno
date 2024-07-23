@@ -17,10 +17,12 @@ namespace StallosDotnetPleno.Tests
 
         protected override void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterModule<AutoMapperModule>();
             builder.RegisterModule<WebApiModule>();
+            builder.RegisterModule<PresentersModule>();
             builder.RegisterModule<AutoMigrationModule>();
-            builder.RegisterModule<ApplicationModule>();
             builder.RegisterModule<InfrastructureModule>();
+            builder.RegisterModule<ApplicationModule>();
         }
     }
 }

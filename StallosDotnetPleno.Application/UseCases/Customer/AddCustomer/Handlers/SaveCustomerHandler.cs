@@ -7,11 +7,11 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
     {
         public override void ProcessRequest(AddCustomerUCRequest req)
         {
-            Console.WriteLine(HandlerName, "Starting process...");
+            req.Process(HandlerName, "Starting process...");
 
             var newCustomer = CustomerRepository.Add(req.Customer);
 
-            Console.WriteLine(HandlerName, "Customer successfully created.");
+            req.Info(HandlerName, "Customer successfully created.");
 
             req.OutputPort?.Standard(new(
                 "Usuário criado com sucesso!",

@@ -7,7 +7,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
     {
         public override void ProcessRequest(AddCustomerUCRequest req)
         {
-            Console.WriteLine(HandlerName, "Starting process");
+            req.Process(HandlerName, "Starting process");
 
             var existUser = CustomerRepository.GetCustomer(c => c.Document == req.Customer.Document);
 
@@ -17,8 +17,8 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
                 req.OutputPort?.Error($"Um usuário com o documento '{req.Customer.Document}' já existe.");
                 return;
             }
-
-            Console.WriteLine(HandlerName, "No users found with the data provided");
+            
+            req.Info(HandlerName, "No users found with the data provided");
 
             Successor?.ProcessRequest(req);
         }

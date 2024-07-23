@@ -24,7 +24,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer
         {
             try
             {
-                Console.WriteLine("AddCustomerUC", "Starting process");
+                req.Process("AddCustomerUC", "Starting process");
                 req.SetOutputPort(OutputPort);
 
                 ExistCustomerHandler.ProcessRequest(req);
@@ -32,7 +32,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer
             catch (Exception ex)
             {
                 Console.WriteLine("AddCustomerUC", $"An error occurred during the AddCustomerUC process: {ex.Message}", ex.StackTrace ?? "");
-                OutputPort.Error($"An error occurred: {ex.Message}");
+                req.Error("AddCustomerUC", $"An error occurred during the Get Favorites process: {ex.Message}", ex.StackTrace ?? "");
             }
             finally
             {

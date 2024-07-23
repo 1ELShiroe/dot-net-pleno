@@ -16,7 +16,7 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
             AddCustomerPresenter Presenter) : ControllerBase
     {
         [HttpPost]
-        public IActionResult Add([FromBody] CustomerRequest payload)
+        public IActionResult Add([FromBody] AddCustomerRequest payload)
         {
             var customer = Model.Customer.New(payload.Type, payload.Name, payload.Document, []);
 
@@ -44,8 +44,5 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
 
             return Presenter.ViewModel;
         }
-
-        public record CustomerAddressRequest(string ZipCode, string Street, string Number, string Neighborhood, string City, string UF);
-        public record CustomerRequest(TypeUser Type, string Name, string Document, CustomerAddressRequest[] Addresses);
     }
 }

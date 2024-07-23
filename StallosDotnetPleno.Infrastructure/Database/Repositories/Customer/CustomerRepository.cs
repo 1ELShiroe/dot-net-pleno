@@ -53,6 +53,16 @@ namespace StallosDotnetPleno.Infrastructure.Database.Repositories.Customer
             return context.SaveChanges();
         }
 
+        public int UpdateRange(List<Model.Customer> models)
+        {
+            using var context = new Context();
+            var entities = Mapper.Map<List<Entity.Customer>>(models);
+
+            context.Customers.UpdateRange(entities);
+
+            return context.SaveChanges();
+        }
+
         public int Remove(Model.Customer model)
         {
             using var context = new Context();

@@ -31,6 +31,7 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.PutCustomer
                 opp.Message,
                 new(
                     customer.Id,
+                    customer.Type.ToString(),
                     customer.Name,
                     customer.Document,
                     customer.Addresses.Select(ad =>

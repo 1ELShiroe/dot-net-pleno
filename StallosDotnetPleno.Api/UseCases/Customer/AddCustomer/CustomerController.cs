@@ -1,7 +1,6 @@
 using StallosDotnetPleno.Application.UseCases.Customer.AddCustomer;
 using StallosDotnetPleno.Application.Interfaces.Services;
 using StallosDotnetPleno.Application.UseCases;
-using StallosDotnetPleno.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 using Model = StallosDotnetPleno.Domain.Models.Customer;

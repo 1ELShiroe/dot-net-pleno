@@ -12,6 +12,11 @@ namespace StallosDotnetPleno.Api.Modules
                     .As<OutputPort<AddCustomerOPP>>()
                     .AsImplementedInterfaces()
                     .InstancePerLifetimeScope().AsSelf();
+
+            builder.RegisterType<UseCases.Customer.PutCustomer.PutCustomerPresenter>()
+                    .As<OutputPort<PutCustomerOPP>>()
+                    .AsImplementedInterfaces()
+                    .InstancePerLifetimeScope().AsSelf();
         }
     }
 }

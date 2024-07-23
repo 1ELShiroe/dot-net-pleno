@@ -28,7 +28,11 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
 
             if (!customer.IsValid || addresses.Any(a => !a.IsValid))
             {
-                Notification.AddNotifications(customer.ValidationResult!);
+                if (!customer.IsValid)
+                {
+                    Notification.AddNotifications(customer.ValidationResult!);
+                    return Presenter.ViewModel;
+                }
 
                 foreach (var address in addresses.Where(a => !a.IsValid))
                 {

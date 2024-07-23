@@ -23,6 +23,29 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.PutCustomer
 
         public override void NotFound(string message) => ViewModel = new NotFoundObjectResult(message);
 
-        public override void Standard(PutCustomerOPP opp) => ViewModel = new OkObjectResult(opp);
+        public override void Standard(PutCustomerOPP opp)
+        {
+            var customer = opp.Data.Customer;
+
+            var response = new PutCustomerResponse(
+                opp.Message,
+                new(
+                    customer.Id,
+                    customer.Name,
+                    customer.Document,
+                    customer.Addresses.Select(ad =>
+                    new PutCustomerAddressResponse(
+                        ad.ZipCode,
+                        ad.Street,
+                        ad.Number,
+                        ad.Neighborhood,
+                        ad.City,
+                        ad.UF
+                    )).ToArray()
+                )
+            );
+
+            ViewModel = new OkObjectResult(response) { StatusCode = 201 };
+        }
     }
 }

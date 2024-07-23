@@ -1,4 +1,5 @@
 using StallosDotnetPleno.Application.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using AutoMapper;
 
@@ -13,7 +14,7 @@ namespace StallosDotnetPleno.Infrastructure.Database.Repositories.Customer
         {
             using var context = new Context();
             var predicate = Mapper.Map<Expression<Func<Entity.Customer, bool>>>(expression);
-            var entities = context.Customers.FirstOrDefault(predicate);
+            var entities = context.Customers.Include(c => c.Addresses).FirstOrDefault(predicate);
 
             return Mapper.Map<Model.Customer>(entities);
         }

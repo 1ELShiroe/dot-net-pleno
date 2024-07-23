@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using StallosDotnetPleno.Domain.Validators.Customer;
 
 namespace StallosDotnetPleno.Domain.Models.Customer
@@ -12,6 +14,7 @@ namespace StallosDotnetPleno.Domain.Models.Customer
         public string City { get; private set; }
         public string UF { get; private set; }
 
+        [JsonIgnore]
         public Customer? Customer { get; private set; }
 
         private CustomerAddress(

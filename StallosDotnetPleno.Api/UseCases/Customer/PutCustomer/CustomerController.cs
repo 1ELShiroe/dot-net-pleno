@@ -1,15 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
+using StallosDotnetPleno.Application.UseCases;
+using StallosDotnetPleno.Application.UseCases.Customer.PutCustomer;
 
 namespace StallosDotnetPleno.Api.UseCases.Customer.PutCustomer
 {
     [ApiController]
     [Route("api/pessoa")]
     public class CustomerController(
-        PutCustomerPresenter Presenter) : ControllerBase
+        PutCustomerPresenter Presenter,
+        IUseCase<PutCustomerUCRequest> UseCase) : ControllerBase
     {
         [HttpPut]
         public IActionResult Update([FromBody] PutCustomerRequest payload)
         {
+            var request = new PutCustomerUCRequest(new(
+                payload.Name,
+                payload.Document,
+                payload.Addresses?.Select(e =>
+                    new PutCustomerAddress(e.ZipCode, e.Street, e.Number, e.Neighborhood, e.City, e.UF))
+                    .ToArray()));
+
+            UseCase.Execute(request);
+
             return Presenter.ViewModel;
         }
     }

@@ -40,5 +40,15 @@ namespace StallosDotnetPleno.Infrastructure.Database.Repositories.Customer
 
             return context.SaveChanges();
         }
+
+        public int Remove(Model.Customer model)
+        {
+            using var context = new Context();
+            var entity = Mapper.Map<Entity.Customer>(model);
+
+            context.Customers.Remove(entity);
+
+            return context.SaveChanges();
+        }
     }
 }

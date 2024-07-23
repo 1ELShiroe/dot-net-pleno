@@ -2,8 +2,6 @@ using StallosDotnetPleno.Api.DependencyInjection;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 
-Environment.SetEnvironmentVariable("DBCONN", "Server=localhost,1433;Database=master;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;");
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

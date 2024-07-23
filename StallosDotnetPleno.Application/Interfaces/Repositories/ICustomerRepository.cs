@@ -7,6 +7,7 @@ namespace StallosDotnetPleno.Application.Interfaces.Repositories
     public interface ICustomerRepository
     {
         public Model.Customer GetCustomer(Expression<Func<Model.Customer, bool>> expression);
+        public List<Model.Customer> GetCustomers(Expression<Func<Model.Customer, bool>> expression);
         public Model.Customer Add(Model.Customer model);
         public int Remove(Model.Customer model);
         public int Update(Model.Customer model);

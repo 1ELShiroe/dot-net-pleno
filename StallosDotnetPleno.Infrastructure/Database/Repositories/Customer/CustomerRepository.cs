@@ -19,6 +19,18 @@ namespace StallosDotnetPleno.Infrastructure.Database.Repositories.Customer
             return Mapper.Map<Model.Customer>(entities);
         }
 
+        public List<Model.Customer> GetCustomers(Expression<Func<Model.Customer, bool>> expression)
+        {
+            using var context = new Context();
+            var predicate = Mapper.Map<Expression<Func<Entity.Customer, bool>>>(expression);
+            var entities = context.Customers
+                .Include(c => c.Addresses)
+                .Where(predicate)
+                .ToList();
+
+            return Mapper.Map<List<Model.Customer>>(entities);
+        }
+
         public Model.Customer Add(Model.Customer model)
         {
             using var context = new Context();

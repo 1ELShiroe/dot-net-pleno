@@ -1,5 +1,6 @@
 using StallosDotnetPleno.Domain.Validators.Customer;
 using StallosDotnetPleno.Domain.Enums;
+using System.Text.RegularExpressions;
 
 namespace StallosDotnetPleno.Domain.Models.Customer
 {
@@ -15,7 +16,7 @@ namespace StallosDotnetPleno.Domain.Models.Customer
         {
             Type = type;
             Name = name;
-            Document = document;
+            Document = RemovePunctuation(document);
             Addresses = addresses;
 
             Validate(this, new CustomerValidator());
@@ -25,5 +26,10 @@ namespace StallosDotnetPleno.Domain.Models.Customer
             => new(type, nome, documento, addresses);
 
         public void SetAddresses(ICollection<CustomerAddress> addresses) => Addresses = addresses;
+
+        private string RemovePunctuation(string document)
+        {
+            return Regex.Replace(document, @"[^\w\d]", string.Empty);
+        }
     }
 }

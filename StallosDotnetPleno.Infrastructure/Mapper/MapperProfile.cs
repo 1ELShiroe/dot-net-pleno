@@ -1,7 +1,6 @@
+using StallosDotnetPleno.Infrastructure.Database.Entities.Customer;
 using StallosDotnetPleno.Domain.Models.Customer;
 using AutoMapper;
-
-using Entity = StallosDotnetPleno.Infrastructure.Database.Entities.Customer;
 
 namespace StallosDotnetPleno.Infrastructure.Mapper
 {
@@ -9,8 +8,8 @@ namespace StallosDotnetPleno.Infrastructure.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<CustomerModel, Entity.Customer>().ReverseMap();
-            CreateMap<CustomerAddressModel, Entity.CustomerAddress>().ReverseMap();
+            CreateMap<CustomerModel, CustomerEntity>().ReverseMap();
+            CreateMap<CustomerAddressModel, CustomerAddressEntity>().ReverseMap();
         }
     }
 }

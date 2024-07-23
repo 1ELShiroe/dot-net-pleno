@@ -6,8 +6,8 @@ namespace StallosDotnetPleno.Infrastructure.Database
 {
     public class Context : DbContext
     {
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<CustomerAddress> CustomerAddresses { get; set; }
+        public DbSet<CustomerEntity> Customers { get; set; }
+        public DbSet<CustomerAddressEntity> CustomerAddresses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

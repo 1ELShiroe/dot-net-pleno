@@ -1,11 +1,12 @@
+using StallosDotnetPleno.Infrastructure.Database.Entities.Customer;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
 namespace StallosDotnetPleno.Infrastructure.Database.Map.Customer
 {
-    public class CustomerMap : IEntityTypeConfiguration<Entities.Customer.Customer>
+    public class CustomerMap : IEntityTypeConfiguration<CustomerEntity>
     {
-        public void Configure(EntityTypeBuilder<Entities.Customer.Customer> builder)
+        public void Configure(EntityTypeBuilder<CustomerEntity> builder)
         {
             builder.ToTable("customer", "StallosDotnetPleno");
             builder.HasKey(a => a.Id);

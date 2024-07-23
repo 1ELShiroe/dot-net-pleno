@@ -1,6 +1,6 @@
 namespace StallosDotnetPleno.Infrastructure.Database.Entities.Customer
 {
-    public class CustomerAddress
+    public class CustomerAddressEntity
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
@@ -11,6 +11,6 @@ namespace StallosDotnetPleno.Infrastructure.Database.Entities.Customer
         public string? City { get; set; }
         public string? UF { get; set; }
 
-        public virtual Customer? Customer { get; set; }
+        public virtual CustomerEntity? Customer { get; set; }
     }
 }

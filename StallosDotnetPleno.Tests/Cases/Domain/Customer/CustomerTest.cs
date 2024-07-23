@@ -1,4 +1,5 @@
 using StallosDotnetPleno.Tests.Builders.Domain;
+using StallosDotnetPleno.Domain.Enums;
 using Xunit.Frameworks.Autofac;
 using FluentAssertions;
 
@@ -13,8 +14,9 @@ namespace StallosDotnetPleno.Tests.Cases.Domain.Customer
         public void ValidateCustomerName_ShouldReturnErrorWhenNameIsInvalid(string name, string expectedMessage, bool shouldContainError)
         {
             var model = CustomerBuilder.Empty()
+                .WithType(TypeUser.PJ)
+                .WithDocument("75.002.339/0001-26")
                 .WithName(name)
-                .WithDocument("documentTest")
                 .Build();
 
             if (shouldContainError)
@@ -32,13 +34,18 @@ namespace StallosDotnetPleno.Tests.Cases.Domain.Customer
         }
 
         [Theory(DisplayName = "Should return error when 'Document' is invalid")]
-        [InlineData("", "Campo 'Document' obrigatório não preenchido", true)]
-        [InlineData("documentTest", "Campo 'Document' obrigatório não preenchido", false)]
-        public void ValidateCustomerDocument_ShouldReturnErrorWhenDocumentIsInvalid(string document, string expectedMessage, bool shouldContainError)
+        [InlineData(TypeUser.PJ, "", "Campo 'Document' obrigatório não preenchido", true)]
+        [InlineData(TypeUser.PF, "", "Campo 'Document' obrigatório não preenchido", true)]
+        [InlineData(TypeUser.PF, "620.286.380-36", "Campo 'Document' deve ser um CPF válido com 11 dígitos.", false)]
+        [InlineData(TypeUser.PJ, "75.002.339/0001-26", "Campo 'Document' deve ser um CNPJ válido com 14 dígitos.", false)]
+        [InlineData(TypeUser.PJ, "75.002.339/0001-2655", "Campo 'Document' deve ser um CNPJ válido com 14 dígitos.", true)]
+        [InlineData(TypeUser.PF, "620.286.3803656", "Campo 'Document' deve ser um CPF válido com 11 dígitos.", true)]
+        public void ValidateCustomerDocument_ShouldReturnErrorWhenDocumentIsInvalid(TypeUser type, string document, string expectedMessage, bool shouldContainError)
         {
             var model = CustomerBuilder.Empty()
-                .WithName("Username")
+                .WithType(type)
                 .WithDocument(document)
+                .WithName("Username")
                 .Build();
 
             if (shouldContainError)

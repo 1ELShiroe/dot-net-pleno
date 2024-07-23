@@ -1,4 +1,6 @@
 using FluentValidation;
+using StallosDotnetPleno.Domain.Enums;
+using StallosDotnetPleno.Domain.Extensions;
 
 namespace StallosDotnetPleno.Domain.Validators.Customer
 {
@@ -11,6 +13,18 @@ namespace StallosDotnetPleno.Domain.Validators.Customer
 
             RuleFor(c => c.Document)
                 .NotEmpty().WithMessage("Campo 'Document' obrigatório não preenchido");
+
+            When(c => c.Type == TypeUser.PF, () =>
+             {
+                 RuleFor(c => c.Document)
+                     .CPF().WithMessage("Campo 'Document' deve ser um CPF válido com 11 dígitos.");
+             });
+
+            When(c => c.Type == TypeUser.PJ, () =>
+            {
+                RuleFor(c => c.Document)
+                    .CNPJ().WithMessage("Campo 'Document' deve ser um CNPJ válido com 14 dígitos.");
+            });
         }
     }
 }

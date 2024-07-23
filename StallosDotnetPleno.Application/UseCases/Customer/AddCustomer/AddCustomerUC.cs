@@ -24,7 +24,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer
         {
             try
             {
-                Console.WriteLine("GetViewersUC", "Starting process");
+                Console.WriteLine("AddCustomerUC", "Starting process");
                 req.SetOutputPort(OutputPort);
 
                 ExistCustomerHandler.ProcessRequest(req);

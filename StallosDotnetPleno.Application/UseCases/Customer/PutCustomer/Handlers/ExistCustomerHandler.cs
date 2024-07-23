@@ -14,7 +14,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
             if (existUser == null)
             {
                 Console.WriteLine(HandlerName, $"Nenhum usuário encontrado com o documento '{req.NewCustomer.Document}'.");
-                req.OutputPort?.Error($"Nenhum usuário encontrado com o documento '{req.NewCustomer.Document}'.");
+                req.OutputPort?.NotFound($"Nenhum usuário encontrado com o documento '{req.NewCustomer.Document}'.");
                 return;
             }
 

@@ -18,7 +18,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.RemoveCustomer
 
                 if (existUser == null)
                 {
-                    OutputPort.Error("Nenhum usuário encontrado com o documento informado.");
+                    OutputPort.NotFound("Nenhum usuário encontrado com o documento informado.");
                     return;
                 }
 

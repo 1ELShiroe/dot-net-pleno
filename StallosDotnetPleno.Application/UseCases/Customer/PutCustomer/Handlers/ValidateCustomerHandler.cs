@@ -17,8 +17,6 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
                     return;
                 }
 
-                Console.WriteLine(req.Customer.Addresses.Where(a => !a.IsValid).Count());
-
                 foreach (var address in req.Customer.Addresses.Where(a => !a.IsValid))
                 {
                     Notification.AddNotifications(address.ValidationResult!);

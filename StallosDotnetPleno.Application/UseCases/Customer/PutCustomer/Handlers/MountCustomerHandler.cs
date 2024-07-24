@@ -8,17 +8,17 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
         {
             req.Process(HandlerName, "Starting process");
 
-            var addresses = req.NewCustomer.Addresses?.Select(a =>
-                CustomerAddressModel.New(
+            var addresses = req.NewCustomer.Addresses != null && req.NewCustomer.Addresses.Length >= 1
+                ? req.NewCustomer.Addresses.Select(a => CustomerAddressModel.New(
                     req.Customer!.Id,
                     a.ZipCode ?? string.Empty,
                     a.Street ?? string.Empty,
                     a.Number ?? string.Empty,
                     a.Neighborhood ?? string.Empty,
                     a.City ?? string.Empty,
-                    a.UF ?? string.Empty))
-                .ToList();
-
+                    a.UF ?? string.Empty)).ToList()
+                : req.Customer!.Addresses;
+                
             var customer = CustomerModel.New(
                 req.Customer!.Type,
                 req.NewCustomer.Name ?? req.Customer.Name,

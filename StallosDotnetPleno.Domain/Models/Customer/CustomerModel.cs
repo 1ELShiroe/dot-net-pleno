@@ -22,12 +22,12 @@ namespace StallosDotnetPleno.Domain.Models.Customer
             Validate(this, new CustomerValidator());
         }
 
-        public static CustomerModel New(TypeUser type, string nome, string documento, ICollection<CustomerAddressModel> addresses)
-            => new(type, nome, documento, addresses);
+        public static CustomerModel New(TypeUser type, string name, string document, ICollection<CustomerAddressModel> addresses)
+            => new(type, name, document, addresses);
 
         public void SetAddresses(ICollection<CustomerAddressModel> addresses) => Addresses = addresses;
 
-        private string RemovePunctuation(string document)
+        private static string RemovePunctuation(string document)
         {
             return Regex.Replace(document, @"[^\w\d]", string.Empty);
         }

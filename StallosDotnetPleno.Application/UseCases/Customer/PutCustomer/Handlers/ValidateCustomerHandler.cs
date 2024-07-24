@@ -7,11 +7,9 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
     {
         public override void ProcessRequest(PutCustomerUCRequest req)
         {
-            Console.WriteLine(HandlerName, "Starting validation process for customer update");
+            req.Process(HandlerName, "Starting validation process for customer update");
 
-            Console.WriteLine(req.Customer!.Addresses.Any(a => !a.IsValid));
-
-            if (!req.Customer.IsValid || req.Customer.Addresses.Any(a => !a.IsValid))
+            if (!req.Customer!.IsValid || req.Customer.Addresses.Any(a => !a.IsValid))
             {
                 if (!req.Customer.IsValid)
                 {
@@ -28,7 +26,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
                 }
             }
 
-            Console.WriteLine(HandlerName, "Validation succeeded, proceeding to next handler");
+            req.Info(HandlerName, "Validation succeeded, proceeding to next handler");
             Successor?.ProcessRequest(req);
         }
     }

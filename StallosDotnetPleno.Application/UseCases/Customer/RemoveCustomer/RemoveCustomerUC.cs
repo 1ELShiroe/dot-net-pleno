@@ -12,25 +12,26 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.RemoveCustomer
         {
             try
             {
-                Console.WriteLine("RemoveCustomerUC", "Starting process");
+                req.Process("RemoveCustomerUC", "Starting process");
 
                 var existUser = CustomerRepository.GetCustomer(c => c.Document == req.Document);
 
                 if (existUser == null)
                 {
+                    req.Info("RemoveCustomerUC", $"Customer with Document {req.Document} not found");
                     OutputPort.NotFound("Nenhum usuário encontrado com o documento informado.");
                     return;
                 }
 
                 var deleteCount = CustomerRepository.Remove(existUser);
 
-                Console.WriteLine($"Foram deletados {deleteCount} usuário(s)");
+                req.Info("RemoveCustomerUC", $"Foram deletados {deleteCount} usuário(s)");
 
                 OutputPort.Standard(new RemoveCustomerOPP("Usuário deletado com sucesso."));
             }
             catch (Exception ex)
             {
-                Console.WriteLine("RemoveCustomerUC", $"An error occurred during the RemoveCustomerUC process: {ex.Message}", ex.StackTrace ?? "");
+                req.Error("RemoveCustomerUC", $"An error occurred during the RemoveCustomerUC process: {ex.Message}", ex.StackTrace ?? "");
                 OutputPort.Error($"An error occurred: {ex.Message}");
             }
             finally

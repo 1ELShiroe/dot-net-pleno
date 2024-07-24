@@ -26,13 +26,13 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF
         {
             try
             {
-                Console.WriteLine("GetHistoryCPFUC", "Starting process");
+                req.Process("GetHistoryCPFUC", "Starting process");
 
                 GetCustomersHandler.ProcessRequest(req);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetHistoryCPFUC", $"An error occurred during the GetHistoryCPFUC process: {ex.Message}", ex.StackTrace ?? "");
+                req.Error("GetHistoryCPFUC", $"An error occurred during the GetHistoryCPFUC process: {ex.Message}", ex.StackTrace ?? "");
             }
             finally
             {

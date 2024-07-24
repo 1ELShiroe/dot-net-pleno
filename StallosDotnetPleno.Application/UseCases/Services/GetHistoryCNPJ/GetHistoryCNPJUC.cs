@@ -24,13 +24,13 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCNPJ
         {
             try
             {
-                Console.WriteLine("GetHistoryCNPJUC", "Starting process");
+                req.Process("GetHistoryCNPJUC", "Starting process");
 
                 GetCustomersHandler.ProcessRequest(req);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetHistoryCNPJUC", $"An error occurred during the GetHistoryCNPJUC process: {ex.Message}", ex.StackTrace ?? "");
+                req.Error("GetHistoryCNPJUC", $"An error occurred during the GetHistoryCNPJUC process: {ex.Message}", ex.StackTrace ?? "");
             }
             finally
             {

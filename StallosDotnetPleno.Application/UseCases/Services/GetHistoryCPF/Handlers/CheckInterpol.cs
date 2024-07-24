@@ -4,7 +4,7 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF.Handler
     {
         public override void ProcessRequest(GetHistoryCPFUCRequest req)
         {
-            Console.WriteLine("Starting to process request to search Interpol with CPF");
+            req.Process(HandlerName, "Starting to process request to search Interpol with CPF");
 
             // Ainda a realizar implementação dos metodos pra acesso a API, aguardado acesso a API pra testes.
 

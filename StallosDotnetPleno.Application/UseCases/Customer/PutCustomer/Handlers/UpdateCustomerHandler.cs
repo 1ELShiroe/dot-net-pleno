@@ -7,7 +7,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
     {
         public override void ProcessRequest(PutCustomerUCRequest req)
         {
-            Console.WriteLine(HandlerName, "Starting process");
+            req.Process(HandlerName, "Starting process");
 
             CustomerRepository.Update(req.Customer!);
 
@@ -17,7 +17,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
                 "Usuário atualizado com sucesso!",
                 new(customers)));
 
-            Console.WriteLine(HandlerName, $"Customer with ID: {req.Customer!.Document} updated successfully");
+            req.Info(HandlerName, $"Customer with ID: {req.Customer!.Document} updated successfully");
 
             Successor?.ProcessRequest(req);
         }

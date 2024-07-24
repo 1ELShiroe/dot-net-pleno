@@ -7,11 +7,11 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCNPJ.Handle
     {
         public override void ProcessRequest(GetHistoryCNPJUCRequest req)
         {
-            Console.WriteLine("Starting to update customers");
+            req.Process(HandlerName, "Starting to update customers");
 
             var countUpdate = CustomerRepository.UpdateRange(req.Customers);
 
-            Console.WriteLine($"{countUpdate} users were changed in our database");
+            req.Info(HandlerName, $"{countUpdate} users were changed in our database");
 
             Successor?.ProcessRequest(req);
         }

@@ -6,7 +6,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
     {
         public override void ProcessRequest(PutCustomerUCRequest req)
         {
-            Console.WriteLine(HandlerName, "Starting process");
+            req.Process(HandlerName, "Starting process");
 
             var addresses = req.NewCustomer.Addresses?.Select(a =>
                 CustomerAddressModel.New(

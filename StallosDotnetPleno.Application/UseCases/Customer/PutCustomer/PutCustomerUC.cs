@@ -29,14 +29,16 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer
         {
             try
             {
-                Console.WriteLine("PutCustomerUC", "Starting process");
+                req.Process("PutCustomerUC", "Starting process");
                 req.SetOutputPort(OutputPort);
 
                 ExistCustomerHandler.ProcessRequest(req);
+
+                req.Info("PutCustomerUC", "Starting Finished");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("PutCustomerUC", $"An error occurred during the PutCustomerUC process: {ex.Message}", ex.StackTrace ?? "");
+                req.Error("PutCustomerUC", $"An error occurred during the PutCustomerUC process: {ex.Message}", ex.StackTrace ?? "");
                 OutputPort.Error($"An error occurred: {ex.Message}");
             }
             finally

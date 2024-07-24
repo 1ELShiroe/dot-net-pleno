@@ -4,7 +4,7 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCNPJ.Handle
     {
         public override void ProcessRequest(GetHistoryCNPJUCRequest req)
         {
-            Console.WriteLine("Starting to process request to search Cepim with CNPJ");
+            req.Process(HandlerName, "Starting to process request to search Cepim with CNPJ");
 
             // Ainda a realizar implementação dos metodos pra acesso a API, aguardado acesso a API pra testes.
 

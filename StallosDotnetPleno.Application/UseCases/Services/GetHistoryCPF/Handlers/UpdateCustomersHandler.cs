@@ -5,7 +5,7 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF.Handler
     public class UpdateCustomersHandler(
         ICustomerRepository CustomerRepository) : HandlerAsync<GetHistoryCPFUCRequest>
     {
-        public override Task ProcessRequestAsync(GetHistoryCPFUCRequest req)
+        public override async Task ProcessRequestAsync(GetHistoryCPFUCRequest req)
         {
             req.Process(HandlerName, "Starting to update customers");
 
@@ -13,8 +13,8 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF.Handler
 
             req.Info(HandlerName, $"{countUpdate} users were changed in our database");
 
-            Successor?.ProcessRequestAsync(req);
-            return Task.CompletedTask;
+            if (Successor != null)
+                await Successor.ProcessRequestAsync(req);
         }
     }
 }

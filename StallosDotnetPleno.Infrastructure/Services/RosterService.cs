@@ -2,12 +2,15 @@ using StallosDotnetPleno.Application.Interfaces.Services;
 using StallosDotnetPleno.Domain.Models.Roster;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Text;
+using System.Net;
 
 namespace StallosDotnetPleno.Infrastructure.Services
 {
     public class RosterService : IRosterService
     {
         private readonly string API_URL = Environment.GetEnvironmentVariable("API_URL")!;
+        private readonly string API_URL_TOKEN = Environment.GetEnvironmentVariable("API_URL_TOKEN")!;
         private readonly string ClientId = Environment.GetEnvironmentVariable("CLIENT_ID")!;
         private readonly string ClientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET")!;
         private readonly string GrantType = Environment.GetEnvironmentVariable("GRANT_TYPE")!;
@@ -22,7 +25,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <exception cref="Exception">Lançada se o token de acesso não for encontrado ou se a requisição falhar.</exception>
         public async Task<string> GetTokenAsync()
         {
-            var client = new RestClient(API_URL);
+            var client = new RestClient(API_URL_TOKEN);
             var request = new RestRequest("/oauth2/token", Method.Post);
 
             request.AddHeader("cache-control", CacheControl);
@@ -60,7 +63,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
             request.AddHeader("accept", "application/json");
             request.AddHeader("x-api-key", ApiKey);
 
-            var token = GetTokenAsync();
+            var token = await GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var body = new
@@ -75,7 +78,9 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 Listas = histories
             };
 
-            request.AddJsonBody(body);
+            var jsonBody = JsonConvert.SerializeObject(body);
+
+            request.AddJsonBody(jsonBody);
 
             var response = await client.ExecuteAsync(request);
 
@@ -117,7 +122,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetTokenAsync();
+            var token = await GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var response = await client.ExecuteAsync(request);
@@ -127,10 +132,13 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 var tokenResponse = JsonConvert.DeserializeObject<RosterDefault<RosterBolsaFamilia>>(response.Content!);
                 return tokenResponse ?? throw new Exception("Bolsa Familia information not found in the response");
             }
-            else
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
             {
-                throw new Exception($"Error obtaining Bolsa Familia information: {response.StatusCode} - {response.Content}");
+                return new RosterDefault<RosterBolsaFamilia>();
             }
+
+            throw new Exception($"Error obtaining Bolsa Familia information: {response.StatusCode} - {response.Content}");
         }
 
         /// <summary>
@@ -162,7 +170,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetTokenAsync();
+            var token = await GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var response = await client.ExecuteAsync(request);
@@ -171,6 +179,14 @@ namespace StallosDotnetPleno.Infrastructure.Services
             {
                 var tokenResponse = JsonConvert.DeserializeObject<RosterDefault<RosterPep>>(response.Content!);
                 return tokenResponse ?? throw new Exception("PEP information not found in the response");
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return new RosterDefault<RosterPep>()
+                {
+                    IsFound = false
+                };
             }
 
             throw new Exception($"Error obtaining PEP information: {response.StatusCode} - {response.Content}");
@@ -204,7 +220,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetTokenAsync();
+            var token = await GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var response = await client.ExecuteAsync(request);
@@ -213,6 +229,14 @@ namespace StallosDotnetPleno.Infrastructure.Services
             {
                 var tokenResponse = JsonConvert.DeserializeObject<RosterDefault<RosterInterpol>>(response.Content!);
                 return tokenResponse ?? throw new Exception("Interpol information not found in the response");
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return new RosterDefault<RosterInterpol>()
+                {
+                    IsFound = false
+                };
             }
 
             throw new Exception($"Error obtaining Interpol information: {response.StatusCode} - {response.Content}");
@@ -246,7 +270,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetTokenAsync();
+            var token = await GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var response = await client.ExecuteAsync(request);
@@ -255,6 +279,14 @@ namespace StallosDotnetPleno.Infrastructure.Services
             {
                 var tokenResponse = JsonConvert.DeserializeObject<RosterDefault<RosterOFac>>(response.Content!);
                 return tokenResponse ?? throw new Exception("OFAC information not found in the response");
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return new RosterDefault<RosterOFac>()
+                {
+                    IsFound = false
+                };
             }
 
             throw new Exception($"Error obtaining OFAC information: {response.StatusCode} - {response.Content}");
@@ -288,7 +320,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetTokenAsync();
+            var token = await GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var response = await client.ExecuteAsync(request);
@@ -297,6 +329,14 @@ namespace StallosDotnetPleno.Infrastructure.Services
             {
                 var tokenResponse = JsonConvert.DeserializeObject<RosterDefault<RosterCepim>>(response.Content!);
                 return tokenResponse ?? throw new Exception("CEPIM information not found in the response");
+            }
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return new RosterDefault<RosterCepim>()
+                {
+                    IsFound = false
+                };
             }
 
             throw new Exception($"Error obtaining information from CEPIM: {response.StatusCode} - {response.Content}");

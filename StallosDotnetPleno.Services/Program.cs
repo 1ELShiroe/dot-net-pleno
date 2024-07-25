@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.AddAutofacRegistration());
 
-
 builder.Services.AddHostedService<GetHistoryCPFService>();
+builder.Services.AddHostedService<GetHistoryCNPJService>();
 
 var app = builder.Build();
 app.Run();

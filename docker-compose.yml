@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  dot-net-pleno-services:
+    build:
+      context: .
+      dockerfile: ./StallosDotnetPleno.Services/Dockerfile
+    environment:
+      DBCONN: "Server=host.docker.internal,1433;Database=master;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;"
+      JWT_SECRET: "JSSCompnayORGKEYACESSTOKENASDACBA"
+      CLIENT_ID: ""
+      CLIENT_SECRET: ""
+      API_URL_TOKEN: "https://stallosopendata.auth.us-east-2.amazoncognito.com"
+      API_URL: "https://x5hn0kjhpl.execute-api.us-east-2.amazonaws.com"
+      API_KEY: ""
+      GRANT_TYPE: "client_credentials"
+    networks:
+      - dot-net-pleno-api
+    depends_on:
+      - dot-net-pleno-sql
+
+  dot-net-pleno-api:
+    build:
+      context: .
+      dockerfile: ./StallosDotnetPleno.Api/Dockerfile
+    environment:
+      DBCONN: "Server=host.docker.internal,1433;Database=master;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;"
+      JWT_SECRET: "JSSCompnayORGKEYACESSTOKENASDACBA"
+    ports:
+      - 5000:8080
+    networks:
+      - dot-net-pleno-api
+    depends_on:
+      - dot-net-pleno-sql
+
+  dot-net-pleno-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "YourStrong@Passw0rd"
+    ports:
+      - 1433:1433
+    networks:
+      - dot-net-pleno-api
+    volumes:
+      - sql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-PyourStrong(!)Password", "-Q", "select 1"]
+      interval: 1s
+      retries: 20
+
+volumes:
+  sql-data:
+
+networks:
+  dot-net-pleno-api:

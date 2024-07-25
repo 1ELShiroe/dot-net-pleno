@@ -30,10 +30,8 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer
             {
                 req.Process("AddCustomerUC", "Starting process");
                 req.SetOutputPort(OutputPort);
-                
-                var test = Roster.GetToken();
-                System.Console.WriteLine(test);
-                // ExistCustomerHandler.ProcessRequest(req);
+
+                ExistCustomerHandler.ProcessRequest(req);
             }
             catch (Exception ex)
             {

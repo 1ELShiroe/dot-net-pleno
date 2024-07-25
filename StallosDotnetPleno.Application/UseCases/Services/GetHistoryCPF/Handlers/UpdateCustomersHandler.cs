@@ -3,9 +3,9 @@ using StallosDotnetPleno.Application.Interfaces.Repositories;
 namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF.Handlers
 {
     public class UpdateCustomersHandler(
-        ICustomerRepository CustomerRepository) : Handler<GetHistoryCPFUCRequest>
+        ICustomerRepository CustomerRepository) : HandlerAsync<GetHistoryCPFUCRequest>
     {
-        public override void ProcessRequest(GetHistoryCPFUCRequest req)
+        public override Task ProcessRequestAsync(GetHistoryCPFUCRequest req)
         {
             req.Process(HandlerName, "Starting to update customers");
 
@@ -13,7 +13,8 @@ namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF.Handler
 
             req.Info(HandlerName, $"{countUpdate} users were changed in our database");
 
-            Successor?.ProcessRequest(req);
+            Successor?.ProcessRequestAsync(req);
+            return Task.CompletedTask;
         }
     }
 }

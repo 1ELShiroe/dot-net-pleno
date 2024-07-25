@@ -9,6 +9,7 @@ namespace StallosDotnetPleno.Domain.Models.Customer
         public TypeUser Type { get; set; }
         public string Name { get; private set; }
         public string Document { get; private set; }
+        public List<string> Histories { get; private set; } = [];
 
         public ICollection<CustomerAddressModel> Addresses { get; private set; } = [];
 

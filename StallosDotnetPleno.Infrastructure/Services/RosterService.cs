@@ -1,5 +1,5 @@
-using StallosDotnetPleno.Infrastructure.Services.Entities.Roster;
 using StallosDotnetPleno.Application.Interfaces.Services;
+using StallosDotnetPleno.Domain.Models.Roster;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -20,7 +20,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// </summary>
         /// <returns>Token de acesso como string.</returns>
         /// <exception cref="Exception">Lançada se o token de acesso não for encontrado ou se a requisição falhar.</exception>
-        public string GetToken()
+        public async Task<string> GetTokenAsync()
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/oauth2/token", Method.Post);
@@ -29,7 +29,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
             request.AddHeader("content-type", ContentType);
             request.AddParameter(ContentType, $"grant_type={GrantType}&client_id={ClientId}&client_secret={ClientSecret}", ParameterType.RequestBody);
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -50,7 +50,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <param name="histories">Lista de históricos.</param>
         /// <returns>Protocolo como string.</returns>
         /// <exception cref="Exception">Lançada se o protocolo não for encontrado ou se a requisição falhar.</exception>
-        public string GetProtocol(string name, string document, string responsible, int origin, string[] histories)
+        public async Task<string> GetProtocol(string name, string document, string responsible, int origin, string[] histories)
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/prd/roster/v2/protocolo", Method.Post);
@@ -60,7 +60,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
             request.AddHeader("accept", "application/json");
             request.AddHeader("x-api-key", ApiKey);
 
-            var token = GetToken();
+            var token = GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
             var body = new
@@ -77,7 +77,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
 
             request.AddJsonBody(body);
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -98,7 +98,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <param name="pageSize">Tamanho da página (padrão: 10).</param>
         /// <returns>Um objeto <see cref="RosterBolsaFamilia"/> contendo os resultados da busca.</returns>
         /// <exception cref="Exception">Lançada se a requisição falhar ou se a resposta estiver vazia.</exception>
-        public RosterDefault<RosterBolsaFamilia> BolsaFamilia(string protocol, string? comparison, string name, string cpf, int? pageNumber, int? pageSize)
+        public async Task<RosterDefault<RosterBolsaFamilia>> BolsaFamilia(string protocol, string? comparison, string name, string cpf, int? pageNumber, int? pageSize)
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/prd/roster/v2/bolsa-familia", Method.Get);
@@ -117,10 +117,10 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetToken();
+            var token = GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -143,7 +143,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <param name="pageSize">Tamanho da página (padrão: 10).</param>
         /// <returns>Um objeto <see cref="RosterDefault{RosterPep}"/> contendo os resultados da busca.</returns>
         /// <exception cref="Exception">Lançada se a requisição falhar ou se a resposta estiver vazia.</exception>
-        public RosterDefault<RosterPep> Pep(string protocol, string? comparison, string name, string cpf, int? pageNumber, int? pageSize)
+        public async Task<RosterDefault<RosterPep>> Pep(string protocol, string? comparison, string name, string cpf, int? pageNumber, int? pageSize)
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/prd/roster/v2/pep", Method.Get);
@@ -162,10 +162,10 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetToken();
+            var token = GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -186,7 +186,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <param name="pageSize">O tamanho da página (opcional, padrão é 10).</param>
         /// <returns>Objeto RosterDefault contendo informações do RosterInterpol.</returns>
         /// <exception cref="Exception">Lançada se a informação do Interpol não for encontrada ou se a requisição falhar.</exception>
-        public RosterDefault<RosterInterpol> Interpol(string protocol, string? comparison, string name, int? pageNumber, int? pageSize)
+        public async Task<RosterDefault<RosterInterpol>> Interpol(string protocol, string? comparison, string name, int? pageNumber, int? pageSize)
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/prd/roster/v2/interpol", Method.Get);
@@ -204,10 +204,10 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetToken();
+            var token = GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -228,7 +228,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <param name="pageSize">O tamanho da página para paginação (opcional).</param>
         /// <returns>Retorna um objeto <see cref="RosterDefault{RosterInterpol}"/> contendo os dados do cadastro OFAC.</returns>
         /// <exception cref="Exception">Lançada quando a resposta não for bem-sucedida ou as informações do OFAC não forem encontradas na resposta.</exception>
-        public RosterDefault<RosterOFac> OFac(string protocol, string? comparison, string name, int? pageNumber, int? pageSize)
+        public async Task<RosterDefault<RosterOFac>> OFac(string protocol, string? comparison, string name, int? pageNumber, int? pageSize)
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/prd/roster/v2/ofac", Method.Get);
@@ -246,10 +246,10 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetToken();
+            var token = GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {
@@ -270,7 +270,7 @@ namespace StallosDotnetPleno.Infrastructure.Services
         /// <param name="pageSize">O tamanho da página para paginação (opcional).</param>
         /// <returns>Retorna um objeto <see cref="RosterDefault{RosterCepim}"/> contendo os dados do cadastro CEPIM.</returns>
         /// <exception cref="Exception">Lançada quando a resposta não for bem-sucedida ou as informações do CEPIM não forem encontradas na resposta.</exception>
-        public RosterDefault<RosterCepim> Cepim(string protocol, string? comparison, string name, int? pageNumber, int? pageSize)
+        public async Task<RosterDefault<RosterCepim>> Cepim(string protocol, string? comparison, string name, int? pageNumber, int? pageSize)
         {
             var client = new RestClient(API_URL);
             var request = new RestRequest("/prd/roster/v2/ofac", Method.Get);
@@ -288,10 +288,10 @@ namespace StallosDotnetPleno.Infrastructure.Services
                 request.AddParameter("comparacao", comparison);
             }
 
-            var token = GetToken();
+            var token = GetTokenAsync();
             request.AddHeader("Authorization", $"Bearer {token}");
 
-            var response = client.Execute(request);
+            var response = await client.ExecuteAsync(request);
 
             if (response.IsSuccessful)
             {

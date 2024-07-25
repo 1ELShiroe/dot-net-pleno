@@ -2,33 +2,29 @@ using StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF.Handlers;
 
 namespace StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF
 {
-    public class GetHistoryCPFUC : IUseCase<GetHistoryCPFUCRequest>
+    public class GetHistoryCPFUC : IUseCaseAsync<GetHistoryCPFUCRequest>
     {
         private readonly GetCustomersHandler GetCustomersHandler;
 
         public GetHistoryCPFUC(
             GetCustomersHandler getCustomersHandler,
-            CheckBolsaFamiliaHandler checkBolsaFamiliaHandler,
-            CheckPepHandler checkPepHandler,
-            CheckInterpol checkInterpol,
+            CheckCustomerHandler checkCustomerHandler,
             UpdateCustomersHandler updateCustomersHandler)
         {
             GetCustomersHandler = getCustomersHandler;
 
             GetCustomersHandler
-                .SetSucessor(checkBolsaFamiliaHandler)
-                .SetSucessor(checkPepHandler)
-                .SetSucessor(checkInterpol)
-                .SetSucessor(updateCustomersHandler);
+                .SetSuccessor(checkCustomerHandler)
+                .SetSuccessor(updateCustomersHandler);
         }
 
-        public void Execute(GetHistoryCPFUCRequest req)
+        public async Task Execute(GetHistoryCPFUCRequest req)
         {
             try
             {
                 req.Process("GetHistoryCPFUC", "Starting process");
 
-                GetCustomersHandler.ProcessRequest(req);
+                await GetCustomersHandler.ProcessRequestAsync(req);
             }
             catch (Exception ex)
             {

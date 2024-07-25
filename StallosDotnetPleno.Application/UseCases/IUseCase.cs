@@ -4,4 +4,9 @@ namespace StallosDotnetPleno.Application.UseCases
     {
         void Execute(T req);
     }
+
+    public interface IUseCaseAsync<T>
+    {
+        Task Execute(T req);
+    }
 }

@@ -1,6 +1,11 @@
+using StallosDotnetPleno.Application.UseCases;
+using StallosDotnetPleno.Application.UseCases.Services.GetHistoryCPF;
+
 namespace StallosDotnetPleno.Services.Services
 {
-    public class GetHistoryCPFService(ILogger<GetHistoryCPFService> Logger) : BackgroundService
+    public class GetHistoryCPFService(
+        ILogger<GetHistoryCPFService> Logger,
+        IUseCaseAsync<GetHistoryCPFUCRequest> UseCase) : BackgroundService
     {
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -16,6 +21,9 @@ namespace StallosDotnetPleno.Services.Services
                 try
                 {
                     Console.WriteLine("INICIADO");
+
+                    await UseCase.Execute(new());
+
                     await Task.Delay(1000 * 60, stoppingToken);
                 }
                 catch (TaskCanceledException)

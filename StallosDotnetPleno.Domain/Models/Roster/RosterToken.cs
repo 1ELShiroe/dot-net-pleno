@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace StallosDotnetPleno.Infrastructure.Services.Entities.Roster
+namespace StallosDotnetPleno.Domain.Models.Roster
 {
     public class RosterToken
     {

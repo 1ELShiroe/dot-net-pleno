@@ -20,13 +20,13 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.PutCustomer
         [Fact(DisplayName = "Should log not found message and not log error when updating non-existent customer")]
         public void ShouldLogNotFoundMessageAndNotLogErrorWhenUpdatingNonExistentCustomer()
         {
-            DTORequest newCustomer = new("Nivaldeir", "asd48548", []);
+            DTORequest newCustomer = new("Nivaldeir", 5, []);
 
             var request = new PutCustomerUCRequest(newCustomer);
             UseCase.Execute(request);
 
             request.Logs.Should()
-                .Contain(l => l.Message.Equals($"Customer with Document {newCustomer.Document} not found"))
+                .Contain(l => l.Message.Equals($"Customer with Id: {newCustomer.Id} not found"))
                 .And.NotContain(l => l.Type == TypeLog.Error);
         }
 
@@ -37,7 +37,7 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.PutCustomer
                 .WithDocument("49.561.498/0001-50")
                 .Build();
 
-            DTORequest newCustomer = new("Nivaldeir", customer.Document, []);
+            DTORequest newCustomer = new("Nivaldeir", 5, []);
 
             var customerRepositoryMock = new Mock<ICustomerRepository>();
 
@@ -61,9 +61,9 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.PutCustomer
                     .Execute(request);
 
             request.Logs.Should()
-                .NotContain(l => l.Message.Equals($"Customer with Document {newCustomer.Document} not found"))
+                .NotContain(l => l.Message.Equals($"Customer with Id: {newCustomer.Id} not found"))
                 .And.NotContain(l => l.Type == TypeLog.Error)
-                .And.Contain(l => l.Message.Equals($"User found successfully document: {newCustomer.Document}"));
+                .And.Contain(l => l.Message.Equals($"User found successfully Id: {newCustomer.Id}"));
         }
 
 
@@ -75,7 +75,7 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.PutCustomer
                 .WithDocument("603.787.890-00007")
                 .Build();
 
-            DTORequest newCustomer = new("Nivaldeir", customer.Document, []);
+            DTORequest newCustomer = new("Nivaldeir", 5, []);
 
             var customerRepositoryMock = new Mock<ICustomerRepository>();
 
@@ -95,10 +95,10 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.PutCustomer
                     .Execute(request);
 
             request.Logs.Should()
-                .NotContain(l => l.Message.Equals($"Customer with Document {newCustomer.Document} not found"))
+                .NotContain(l => l.Message.Equals($"Customer with Id: {newCustomer.Id} not found"))
                 .And.NotContain(l => l.Type == TypeLog.Error)
                 .And.NotContain(l => l.Message.Equals("Validation succeeded, proceeding to next handler"))
-                .And.Contain(l => l.Message.Equals($"User found successfully document: {newCustomer.Document}"));
+                .And.Contain(l => l.Message.Equals($"User found successfully Id: {newCustomer.Id}"));
         }
     }
 }

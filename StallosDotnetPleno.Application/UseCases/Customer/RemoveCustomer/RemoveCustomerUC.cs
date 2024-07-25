@@ -27,7 +27,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.RemoveCustomer
 
                 var deleteCount = CustomerRepository.Remove(existUser);
 
-                req.Info("RemoveCustomerUC", $"{deleteCount} users were deleted)");
+                req.Info("RemoveCustomerUC", $"{deleteCount} users were deleted");
 
                 OutputPort.Standard(new RemoveCustomerOPP("Usuário deletado com sucesso."));
             }

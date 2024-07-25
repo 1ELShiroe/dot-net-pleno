@@ -21,11 +21,11 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.RemoveCustomer
         {
             var customer = CustomerBuilder.Empty().Build();
 
-            var request = new RemoveCustomerUCRequest(customer.Document);
+            var request = new RemoveCustomerUCRequest(customer.Id);
             UseCase.Execute(request);
 
             request.Logs.Should()
-                .Contain(l => l.Message.Equals($"Customer with Document {customer.Document} not found"))
+                .Contain(l => l.Message.Equals($"Customer with Id: {customer.Id} not found"))
                 .And.NotContain(l => l.Type == TypeLog.Error);
         }
 
@@ -52,11 +52,11 @@ namespace StallosDotnetPleno.Tests.Cases.Application.Customer.RemoveCustomer
 
             var useCase = autoMock.Create<IUseCase<RemoveCustomerUCRequest>>();
 
-            var request = new RemoveCustomerUCRequest(customer.Document);
+            var request = new RemoveCustomerUCRequest(customer.Id);
             useCase.Execute(request);
 
             request.Logs.Should()
-                .Contain(l => l.Message.Equals($"Foram deletados 1 usuário(s)"))
+                .Contain(l => l.Message.Equals($"1 users were deleted"))
                 .And.NotContain(l =>
                     l.Message.Equals($"Customer with ID {customer.Id} not found") ||
                     l.Type == TypeLog.Error);

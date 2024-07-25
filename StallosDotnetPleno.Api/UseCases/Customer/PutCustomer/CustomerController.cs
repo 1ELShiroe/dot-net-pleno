@@ -10,12 +10,12 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.PutCustomer
         PutCustomerPresenter Presenter,
         IUseCase<PutCustomerUCRequest> UseCase) : ControllerBase
     {
-        [HttpPut]
-        public IActionResult Update([FromBody] PutCustomerRequest payload)
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] PutCustomerRequest payload)
         {
             var request = new PutCustomerUCRequest(new(
                 payload.Name,
-                payload.Document,
+                id,
                 payload.Addresses?.Select(e =>
                     new PutCustomerAddress(e.ZipCode, e.Street, e.Number, e.Neighborhood, e.City, e.UF))
                     .ToArray()));

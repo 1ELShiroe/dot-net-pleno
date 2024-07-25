@@ -9,16 +9,16 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer.Handlers
         {
             req.Process(HandlerName, "Starting process");
 
-            var existUser = CustomerRepository.GetCustomer(c => c.Document == req.NewCustomer.Document);
+            var existUser = CustomerRepository.GetCustomer(c => c.Id == req.NewCustomer.Id);
 
             if (existUser == null)
             {
-                req.Info(HandlerName, $"Customer with Document {req.NewCustomer.Document} not found");
-                req.OutputPort?.NotFound($"Nenhum usuário encontrado com o documento '{req.NewCustomer.Document}'.");
+                req.Info(HandlerName, $"Customer with Id: {req.NewCustomer.Id} not found");
+                req.OutputPort?.NotFound($"Nenhum usuário encontrado com o Id: '{req.NewCustomer.Id}'.");
                 return;
             }
 
-            req.Info(HandlerName, $"User found successfully document: {req.NewCustomer.Document}");
+            req.Info(HandlerName, $"User found successfully Id: {req.NewCustomer.Id}");
 
             req.SetCustomer(existUser);
 

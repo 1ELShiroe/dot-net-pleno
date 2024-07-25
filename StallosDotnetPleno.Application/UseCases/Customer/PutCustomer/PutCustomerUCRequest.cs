@@ -26,6 +26,6 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.PutCustomer
         public void SetCustomer(CustomerModel customer) => Customer = customer;
     }
 
-    public record PutCustomer(string? Name, string Document, PutCustomerAddress[]? Addresses);
+    public record PutCustomer(string? Name, int Id, PutCustomerAddress[]? Addresses);
     public record PutCustomerAddress(string? ZipCode, string? Street, string? Number, string? Neighborhood, string? City, string? UF);
 }

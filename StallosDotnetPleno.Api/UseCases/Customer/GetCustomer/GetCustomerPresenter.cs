@@ -39,11 +39,11 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.GetCustomer
                     new GetCustomerAddressResponse(
                         ad.ZipCode,
                         ad.Street,
-                        ad.Number,
                         ad.Neighborhood,
                         ad.City,
                         ad.UF
-                    )).ToArray()
+                    )).ToArray(),
+                    [.. customer.Histories]
                 )
             );
 

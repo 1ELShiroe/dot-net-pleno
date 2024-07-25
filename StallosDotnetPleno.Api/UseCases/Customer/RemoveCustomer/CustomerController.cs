@@ -10,10 +10,10 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.RemoveCustomer
         RemoveCustomerPresenter Presenter,
         IUseCase<RemoveCustomerUCRequest> UseCase) : ControllerBase
     {
-        [HttpDelete]
-        public IActionResult Update([FromBody] RemoveCustomerRequest payload)
+        [HttpDelete("{id}")]
+        public IActionResult Update(int id)
         {
-            var request = new RemoveCustomerUCRequest(payload.Document);
+            var request = new RemoveCustomerUCRequest(id);
             UseCase.Execute(request);
 
             return Presenter.ViewModel;

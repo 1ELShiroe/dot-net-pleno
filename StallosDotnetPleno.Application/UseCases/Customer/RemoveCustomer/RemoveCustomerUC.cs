@@ -14,18 +14,20 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.RemoveCustomer
             {
                 req.Process("RemoveCustomerUC", "Starting process");
 
-                var existUser = CustomerRepository.GetCustomer(c => c.Document == req.Document);
+                System.Console.WriteLine(req.Id);
+
+                var existUser = CustomerRepository.GetCustomer(c => c.Id == req.Id);
 
                 if (existUser == null)
                 {
-                    req.Info("RemoveCustomerUC", $"Customer with Document {req.Document} not found");
+                    req.Info("RemoveCustomerUC", $"Customer with Id: {req.Id} not found");
                     OutputPort.NotFound("Nenhum usuário encontrado com o documento informado.");
                     return;
                 }
 
                 var deleteCount = CustomerRepository.Remove(existUser);
 
-                req.Info("RemoveCustomerUC", $"Foram deletados {deleteCount} usuário(s)");
+                req.Info("RemoveCustomerUC", $"{deleteCount} users were deleted)");
 
                 OutputPort.Standard(new RemoveCustomerOPP("Usuário deletado com sucesso."));
             }

@@ -3,9 +3,9 @@ using StallosDotnetPleno.Domain.Enums;
 
 namespace StallosDotnetPleno.Application.UseCases.Customer.RemoveCustomer
 {
-    public class RemoveCustomerUCRequest(string document)
+    public class RemoveCustomerUCRequest(int id)
     {
-        public string Document { get; } = document;
+        public int Id { get; } = id;
         public List<LogModel> Logs { get; set; } = [];
 
         public void Process(string service, string message)

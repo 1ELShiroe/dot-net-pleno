@@ -38,11 +38,11 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
                     new AddCustomerAddressResponse(
                         ad.ZipCode,
                         ad.Street,
-                        ad.Number,
                         ad.Neighborhood,
                         ad.City,
                         ad.UF
-                    )).ToArray()
+                    )).ToArray(),
+                [.. customer.Histories]
                 )
             );
 

@@ -24,7 +24,7 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.GetCustomer
                 }
 
                 req.Info("GetCustomerUC", $"Customer with ID {req.Id} retrieved successfully");
-                OutputPort.Standard(new("Usuário deletado com sucesso.", new(existUser)));
+                OutputPort.Standard(new("Usuário encontrado com sucesso.", new(existUser)));
             }
             catch (Exception ex)
             {

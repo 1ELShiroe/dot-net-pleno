@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StallosDotnetPleno.Application.UseCases;
 using StallosDotnetPleno.Application.UseCases.Customer.PutCustomer;
@@ -5,6 +6,7 @@ using StallosDotnetPleno.Application.UseCases.Customer.PutCustomer;
 namespace StallosDotnetPleno.Api.UseCases.Customer.PutCustomer
 {
     [ApiController]
+    [Authorize]
     [Route("api/pessoa")]
     public class CustomerController(
         PutCustomerPresenter Presenter,

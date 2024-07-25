@@ -1,12 +1,14 @@
 using StallosDotnetPleno.Application.Interfaces.Repositories;
 using StallosDotnetPleno.Application.Boundaries.Customer;
 using StallosDotnetPleno.Application.Boundaries;
+using StallosDotnetPleno.Application.Interfaces.Services;
 
 namespace StallosDotnetPleno.Application.UseCases.Customer.GetCustomer
 {
     public class GetCustomerUC(
         OutputPort<GetCustomerOPP> OutputPort,
-        ICustomerRepository CustomerRepository) : IUseCase<GetCustomerUCRequest>
+        ICustomerRepository CustomerRepository,
+        IJWTService JWT) : IUseCase<GetCustomerUCRequest>
     {
         public void Execute(GetCustomerUCRequest req)
         {
@@ -24,7 +26,12 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.GetCustomer
                 }
 
                 req.Info("GetCustomerUC", $"Customer with ID {req.Id} retrieved successfully");
-                OutputPort.Standard(new("Usuário encontrado com sucesso.", new(existUser)));
+
+                var token = JWT.Generate(existUser);
+
+                OutputPort.Standard(
+                    new("Usuário encontrado com sucesso.",
+                        new(existUser, token)));
             }
             catch (Exception ex)
             {

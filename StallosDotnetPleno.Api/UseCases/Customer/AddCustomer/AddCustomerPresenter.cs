@@ -30,19 +30,21 @@ namespace StallosDotnetPleno.Api.UseCases.Customer.AddCustomer
             var response = new AddCustomerResponse(
                 opp.Message,
                 new(
-                    customer.Id,
+                    new(
+                        customer.Id,
                     customer.Type.ToString(),
                     customer.Name,
                     customer.Document,
                     customer.Addresses.Select(ad =>
-                    new AddCustomerAddressResponse(
+                    new ResponseAddCustomerAddress(
                         ad.ZipCode,
                         ad.Street,
                         ad.Neighborhood,
                         ad.City,
                         ad.UF
                     )).ToArray(),
-                [.. customer.Histories]
+                [.. customer.Histories]),
+                    opp.Data.Token
                 )
             );
 

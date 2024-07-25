@@ -1,9 +1,11 @@
 using StallosDotnetPleno.Application.Interfaces.Repositories;
+using StallosDotnetPleno.Application.Interfaces.Services;
 
 namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
 {
     public class SaveCustomerHandler(
-        ICustomerRepository CustomerRepository) : Handler<AddCustomerUCRequest>
+        ICustomerRepository CustomerRepository,
+        IJWTService JWT) : Handler<AddCustomerUCRequest>
     {
         public override void ProcessRequest(AddCustomerUCRequest req)
         {
@@ -11,11 +13,13 @@ namespace StallosDotnetPleno.Application.UseCases.Customer.AddCustomer.Handlers
 
             var newCustomer = CustomerRepository.Add(req.Customer);
 
+            var token = JWT.Generate(newCustomer);
+
             req.Info(HandlerName, "Customer successfully created.");
 
             req.OutputPort?.Standard(new(
                 "Usuário criado com sucesso!",
-                new(newCustomer)));
+                new(newCustomer, token)));
 
             Successor?.ProcessRequest(req);
         }

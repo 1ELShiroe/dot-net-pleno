@@ -1,10 +1,12 @@
 using StallosDotnetPleno.Application.UseCases.Customer.RemoveCustomer;
 using StallosDotnetPleno.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StallosDotnetPleno.Api.UseCases.Customer.RemoveCustomer
 {
     [ApiController]
+    [Authorize]
     [Route("api/pessoa")]
     public class CustomerController(
         RemoveCustomerPresenter Presenter,
